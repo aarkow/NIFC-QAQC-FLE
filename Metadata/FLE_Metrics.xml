@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+<idinfo>
+<citation>
+<citeinfo>
+<title>OpsData_QAQC_West_CY2021_20230712_1626</title>
+<geoform>vector digital data</geoform>
+</citeinfo>
+</citation>
+<descript>
+<abstract>The Fireline Effectiveness (FLE) workflow involves a series of essential processing steps aimed at quantifying the efficiency of fireline containment strategies. This workflow begins with the input of fireline data that has undergone Quality Assurance and Quality Control (QAQC) obtained from the second tool associated with this model , and is then attributed to an individual fire as well as a perimeter dataset sourced from the National Interagency Fire Center (NIFC). The workflow comprises the following key steps:Fireline Buffering: To consolidate adjacent firelines, the workflow initiates by buffering firelines within a 50-meter proximity of each other.  Buffers are generated around the fire perimeter to identify distinct areas: held, not engaged, and burned over. A  50-meter buffer is applied, encompassing both 25 meters within and 25 meters outside of the fire perimeter.Firelines intersecting the held area are buffered to 75 meters, and clipped to the perimeter held area, effectively filling in the perimeter held area. This step computes the Held Area to Held Perimeter Area (HaPar) ratio, which is used by multiplying the fire perimeter length by HaPar to determine the length of held firelines. This method is chosen for its ability to account for perimeter complexity while ensuring that held fireline length does not exceed the perimeter. The workflow calculates not engaged and burned over line segments by halving the perimeter of the buffered fireline polygon. A perimeter-to-area ratio PrAr is calculated, recognizing that perimeter complexity and resolution can influence fireline metrics. A Fire Management Complexity Team attribute is included in the output, sourced from NIFC attribution, which enhances an understanding of perimeter complexity. Following these comprehensive processing steps, the workflow then calculates the various FLE metrics. The results are delivered in two formats: as a feature class, facilitating spatial analysis, and as an Excel sheet, enabling data manipulation and reporting.These processing steps collectively enable the evaluation of fireline effectiveness at an incident level, considering factors such as containment strategy success, perimeter complexity, and the incident's operational context. FLE Metrics:The FLE metrics included in this product offer a nuanced understanding of containment strategy performance:HTr (Held Line to Total Line Ratio): This metric quantifies the effectiveness of fireline containment efforts by determining the proportion of fireline that was successfully held in relation to the total length of fireline established during the incident.Tr (Total Line to Fire Perimeter Ratio): Tr measures the extent of containment strategy implementation by evaluating the ratio of the total length of firelines constructed to the final extent of the wildfire's perimeter.Er (Engagement Ratio): Er provides insights into the overall containment strategy's success by considering both held fireline and fireline that was burned over in relation to the total fireline length. This metric captures the comprehensive impact of containment efforts.HER (Held Line Engagement Ratio): Focusing on the effectiveness of held fireline, HER calculates the proportion of fireline that was successfully held in comparison to the total of held and burned over fireline. It highlights the efficiency of containment in preserving established firelines.BTR (Burned Over Line to Total Line Ratio): BTR quantifies the proportion of fireline that was burned over relative to the total length of fireline constructed during the incident. This metric offers insights into areas where containment efforts may have been less effective.NeTr (Not Engaged Line to Total Line Ratio): NeTr evaluates the extent to which firelines were strategically placed to engage with the wildfire. It quantifies the proportion of fireline that did not engage with the wildfire relative to the total fireline length.These metrics collectively can assist in a comprehensive assessment of containment strategy efficiency and investment.</abstract>
+<purpose>The Fireline QAQC GIS product is a tool developed by Alexander Arkowitz (Colorado State University/USFS Contractor) and Matt Thompson (US Forest Service Rocky Mountain Research Station).The Fireline Effectiveness (FLE) GIS product serves as a critical tool for the evaluation of large wildfire management strategies, with the overarching goal of fostering institutional learning and enhancing the effectiveness of fire management organizations. This product capitalizes on the increasing availability of spatially explicit fireline records, which provide valuable insights into the performance of containment strategies. FLE metrics, which are integral to this product, are based on easily quantifiable measures. These metrics center on assessing the length of the final wildfire perimeter and the extent to which firelines were successful in preventing the wildfire from advancing. This evaluation is achieved through overlay analysis, which compares the spatial locations of firelines relative to the final wildfire extent and perimeter on an incident-by-incident basis.</purpose>
+</descript>
+<keywords>
+<theme>
+<themekt>None</themekt>
+<themekey>Fireline</themekey>
+<themekey>QAQC</themekey>
+<themekey>GIS</themekey>
+<themekey>Environmental Modeling</themekey>
+<themekey>National Interagency Fire Center</themekey>
+<themekey>National Incident Feature Service</themekey>
+<themekey>Fire Perimeters</themekey>
+<themekey>Environmental Research</themekey>
+<themekey>Fire</themekey>
+<themekey>Forest Service</themekey>
+<themekey>Rocky Mountain Research Station</themekey>
+<themekey>Geospatial</themekey>
+</theme>
+</keywords>
+<accconst>None</accconst>
+<useconst>Users of the Fireline Effectiveness (FLE) GIS product must consider several important limitations and responsibilities: The FLE GIS product is provided "as is" and may contain errors. Users assume all associated risks and are solely responsible for determining its suitability for their specific purposes. The accuracy, resolution, completeness, and timeliness of the data can vary due to multiple data sources. Independent verification of data accuracy is strongly recommended.This product should not be regarded as legal documents or land surveys, nor should it be utilized for such purposes. Official records available at the National Interagency Fire Center (NIFC) offices should be referenced for legal and land survey matters.Any identified errors in the data should be promptly reported to the authors or NIFC. Users are required to cite the authors as the data source when using this data in derivative products.Modifications to the data made by users should be accurately described. Users should refrain from misrepresenting the data or implying that modifications were approved or endorsed by the authors.The USDA Forest Service provides no warranties, expressed or implied, including merchantability and fitness for a specific purpose, and assumes no legal liability for the data's accuracy, reliability, completeness, or utility. Users are solely responsible for the appropriate use of this data. This data should not be used to determine title, ownership, legal descriptions, boundaries, legal jurisdiction, or land use restrictions on public or private land.The data may or may not depict natural hazards, and users should exercise caution in areas indicated in the data.As the data is dynamic and subject to change, users must verify data limitations and use the data accordingly.</useconst>
+<datacred>This GIS product was created by Alexander Arkowitz (alexander.arkowitz@colostate.edu), a Forest Service contractor and Geospatial Research Associate IV at Colorado State University, and Dr. Matthew Thompson (matthew.p.thompson@usda.gov), a Research Forester for the US Forest Service in the Human Dimensions program.</datacred>
+<native>Esri ArcGIS 13.1.2.41833</native>
+</idinfo>
+<spdoinfo>
+<ptvctinf>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>0</ptvctcnt>
+</sdtsterm>
+</ptvctinf>
+</spdoinfo>
+<eainfo>
+<detailed>
+<enttyp>
+<enttypl>OpsData_QAQC_West_CY2021_20230712_1626</enttypl>
+</enttyp>
+<attr>
+<attrlabl>OBJECTID</attrlabl>
+<attrdef>Internal feature number.</attrdef>
+<attrdefs>Esri</attrdefs>
+<attrdomv>
+<udom>Sequential unique whole numbers that are automatically generated.</udom>
+</attrdomv>
+</attr>
+<attr>
+<attrlabl>HaPar</attrlabl>
+</attr>
+<attr>
+<attrlabl>HeldLine</attrlabl>
+</attr>
+<attr>
+<attrlabl>FirePerimeterMtrs</attrlabl>
+</attr>
+<attr>
+<attrlabl>IncGeodesAreaSqMt</attrlabl>
+</attr>
+<attr>
+<attrlabl>attr_FireMgmtComplexity</attrlabl>
+</attr>
+<attr>
+<attrlabl>Engagement</attrlabl>
+</attr>
+<attr>
+<attrlabl>Shape_Length</attrlabl>
+<attrdef>Length of feature in internal units.</attrdef>
+<attrdefs>Esri</attrdefs>
+<attrdomv>
+<udom>Positive real numbers that are automatically generated.</udom>
+</attrdomv>
+</attr>
+<attr>
+<attrlabl>Shape_Area</attrlabl>
+<attrdef>Area of feature in internal units squared.</attrdef>
+<attrdefs>Esri</attrdefs>
+<attrdomv>
+<udom>Positive real numbers that are automatically generated.</udom>
+</attrdomv>
+</attr>
+<attr>
+<attrlabl>BurnedOverLine</attrlabl>
+</attr>
+<attr>
+<attrlabl>NotEngagedLine</attrlabl>
+</attr>
+<attr>
+<attrlabl>HTr</attrlabl>
+</attr>
+<attr>
+<attrlabl>TR</attrlabl>
+</attr>
+<attr>
+<attrlabl>ER</attrlabl>
+</attr>
+<attr>
+<attrlabl>HER</attrlabl>
+</attr>
+<attr>
+<attrlabl>BTR</attrlabl>
+</attr>
+<attr>
+<attrlabl>NETR</attrlabl>
+</attr>
+<attr>
+<attrlabl>PrAr</attrlabl>
+</attr>
+<attr>
+<attrlabl>TotalLine</attrlabl>
+</attr>
+<attr>
+<attrlabl>FLE_Flag</attrlabl>
+</attr>
+</detailed>
+</eainfo>
+<metainfo>
+<metd>20231003</metd>
+<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+<metstdv>FGDC-STD-001-1998</metstdv>
+<mettc>local time</mettc>
+</metainfo>
+</metadata>

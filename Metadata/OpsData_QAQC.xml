@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+<idinfo>
+<citation>
+<citeinfo>
+<title>OpsData_QAQC_West_CY2021_20230712_1626</title>
+<geoform>vector digital data</geoform>
+</citeinfo>
+</citation>
+<descript>
+<abstract>The Fireline QAQC GIS product is designed to enhance the quality of fireline data used for environmental modeling and tracking purposes. The tool retrieves the Event Line and Historical Fire Perimeters data from the National Interagency Fire Center's National Incident Feature Service (NIFS). The QAQC process involves filtering the event line data to identify completed firelines, cleaning up attribution, and ensuring accurate attribution to specific fires. The tool includes functionality to track changes made to fireline attribution, allowing users to accept or erase those firelines based on the changes. It also performs spatial analysis, such as buffering and intersection, to identify unattributed firelines near the incident of interest.The workflow begins by downloading the selected Event Line data for the specified calendar year (CY) from the NIFS public data. The downloaded data is then extracted and imported into a geodatabase within the tool's workspace. Subsequently, the user-provided fire perimeters are filtered to retain only the perimeters corresponding to the selected CY. This step ensures that the analysis focuses on the desired fire incidents.To ensure accurate attribution of firelines, several data cleanup and processing steps are performed. The tool examines the Event Line and Historical Fire Perimeters datasets to identify completed firelines. Only specific line types related to completed fire operations, such as burnout, dozer line, fuel break, hand line, mixed construction line, plow line, and road line, are retained for further analysis. Firelines marked for deletion or with certain feature statuses are also filtered out.Next, the tool conducts attribute cleanup by removing any extra spaces before or after the text in fields such as attr_incidentnames and attr_irwin IDs. This step ensures consistent and accurate comparison of attributes later in the process. Additionally, any missing IRWIN IDs in the attr_irwin ID field are populated using the corresponding values from the poly_irwinIDs field, provided the attr_irwin ID is null.The Event Line data is then projected to GCS WGS 1984 for consistent spatial analysis, and any null geometry features are removed from the dataset. A geodesic acreage calculation is performed on the perimeter dataset, adding a field to store the calculated values.The tool further compares IRWIN IDs, incident names, and points of origin (POO) between the perimeters and firelines. This comparison identifies lines outside the buffer area but sharing the same IRWIN ID, incident name, or POO state. These lines are selected for inclusion in the analysis. The perimeter data is temporarily copied to the scratch workspace to facilitate the subsequent analysis steps.To determine the matching attributes between firelines and perimeters, the Event Line data is intersected with a polygon representing US states. The resulting data is joined with the perimeter attributes to identify the following conditions:    Firelines with matching IRWIN IDs and incident names    Firelines with matching IRWIN IDs but requiring the incident name from the matching IRWIN    Firelines with matching incident names in the same state but requiring the IRWIN ID from the matching nameThe respective fields in the dataset are populated accordingly, and any overwritten name or IRWIN ID values are stored in the "OldName" and "OldIRWIN" fields.Firelines that lack proper attribution to a specific fire are then identified as a subset for further examination. A buffer is created around the user-provided fire perimeter, and intersecting firelines are selected within this buffer. The "Flag" field is populated based on the specific conditions, indicating whether the firelines are within the buffer but have missing or mismatched incident names and/or IRWIN IDs. The "OldName" and "OldIRWIN" fields are populated for lines with existing attribution that has been changed.To ensure data integrity, duplicate firelines are removed from the dataset. All firelines are converted to single-part features, and the Find Identical tool is utilized to identify duplicates based on shape, incident name, feature category, IRWIN ID, and fireline categorization fields. The duplicate features are dissolved to eliminate redundancy.</abstract>
+<purpose>The Fireline QAQC GIS product is a tool developed by Alexander Arkowitz (Colorado State University/USFS Contractor) and Matt Thompson (US Forest Service Rocky Mountain Research Station). It aims to provide properly QAQCed fireline data suitable for environmental modeling. The tool utilizes the National Interagency Fire Center's National Incident Feature Service data, specifically the Event Line data and the Historical Fire Perimeters data, to perform QAQC operations and attribute firelines accurately.</purpose>
+</descript>
+<keywords>
+<theme>
+<themekt>None</themekt>
+<themekey>Fireline</themekey>
+<themekey>QAQC</themekey>
+<themekey>GIS</themekey>
+<themekey>Environmental Modeling</themekey>
+<themekey>National Interagency Fire Center</themekey>
+<themekey>National Incident Feature Service</themekey>
+<themekey>Fire Perimeters</themekey>
+<themekey>Environmental Research</themekey>
+<themekey>Fire</themekey>
+<themekey>Forest Service</themekey>
+<themekey>Rocky Mountain Research Station</themekey>
+<themekey>Geospatial</themekey>
+</theme>
+</keywords>
+<accconst>None</accconst>
+<useconst>The Fireline QAQC GIS product is provided "as is" and may contain errors. The user assumes all risks associated with its use and bears responsibility for determining its fitness for the intended purpose. The accuracy, resolution, completeness, and timeliness of the data may vary, as they are derived from various sources. The user should exercise caution and independently verify the data's accuracy and suitability for their specific applications. The data should not be considered legal documents or land surveys, and they should not be used as such. Official records should be referenced at the National Interagency Fire Center offices. Any errors identified in the data should be reported to the authors or the National Interagency Fire Center (NIFC). The authors should be cited as the data source in any products derived from these data. Any modifications made to the data by users should be described, and users should not misrepresent the data or imply that changes were approved or endorsed by the authors.</useconst>
+<datacred>This GIS product was created by Alexander Arkowitz (alexander.arkowitz@colostate.edu), a Forest Service contractor and Geospatial Research Associate IV at Colorado State University, and Dr. Matthew Thompson (matthew.p.thompson@usda.gov), a Research Forester for the US Forest Service in the Human Dimensions program.</datacred>
+<native>Esri ArcGIS 13.1.2.41833</native>
+</idinfo>
+<spdoinfo>
+<direct>Vector</direct>
+<ptvctinf>
+<sdtsterm>
+<sdtstype>String</sdtstype>
+<ptvctcnt>0</ptvctcnt>
+</sdtsterm>
+</ptvctinf>
+</spdoinfo>
+<eainfo>
+<detailed>
+<enttyp>
+<enttypl>OpsData_QAQC_West_CY2021_20230712_1626</enttypl>
+</enttyp>
+<attr>
+<attrlabl>Shape</attrlabl>
+<attrdef>Feature geometry.</attrdef>
+<attrdefs>Esri</attrdefs>
+<attrdomv>
+<udom>Coordinates defining the features.</udom>
+</attrdomv>
+</attr>
+<attr>
+<attrlabl>IncidentName</attrlabl>
+</attr>
+<attr>
+<attrlabl>FeatureCategory</attrlabl>
+</attr>
+<attr>
+<attrlabl>MapMethod</attrlabl>
+</attr>
+<attr>
+<attrlabl>RepairStatus</attrlabl>
+</attr>
+<attr>
+<attrlabl>DeleteThis</attrlabl>
+</attr>
+<attr>
+<attrlabl>FeatureAccess</attrlabl>
+</attr>
+<attr>
+<attrlabl>FeatureStatus</attrlabl>
+</attr>
+<attr>
+<attrlabl>IsVisible</attrlabl>
+</attr>
+<attr>
+<attrlabl>Label</attrlabl>
+</attr>
+<attr>
+<attrlabl>LineDateTime</attrlabl>
+</attr>
+<attr>
+<attrlabl>CreateDate</attrlabl>
+</attr>
+<attr>
+<attrlabl>DateCurrent</attrlabl>
+</attr>
+<attr>
+<attrlabl>LengthFeet</attrlabl>
+</attr>
+<attr>
+<attrlabl>IRWINID</attrlabl>
+</attr>
+<attr>
+<attrlabl>GlobalID</attrlabl>
+</attr>
+<attr>
+<attrlabl>LineWidthFeet</attrlabl>
+</attr>
+<attr>
+<attrlabl>ArchClearance</attrlabl>
+</attr>
+<attr>
+<attrlabl>GDB_FROM_DATE</attrlabl>
+</attr>
+<attr>
+<attrlabl>GDB_TO_DATE</attrlabl>
+</attr>
+<attr>
+<attrlabl>OBJECTID</attrlabl>
+<attrdef>Internal feature number.</attrdef>
+<attrdefs>Esri</attrdefs>
+<attrdomv>
+<udom>Sequential unique whole numbers that are automatically generated.</udom>
+</attrdomv>
+</attr>
+<attr>
+<attrlabl>FirelineCatPrioritizationAsgn</attrlabl>
+</attr>
+<attr>
+<attrlabl>OrigOID_Link</attrlabl>
+</attr>
+<attr>
+<attrlabl>QueryComparison</attrlabl>
+</attr>
+<attr>
+<attrlabl>OldIRWIN</attrlabl>
+</attr>
+<attr>
+<attrlabl>OldName</attrlabl>
+</attr>
+<attr>
+<attrlabl>Flag</attrlabl>
+</attr>
+<attr>
+<attrlabl>attr_IncidentName</attrlabl>
+</attr>
+<attr>
+<attrlabl>attr_IrwinID</attrlabl>
+</attr>
+<attr>
+<attrlabl>Shape_Length</attrlabl>
+<attrdef>Length of feature in internal units.</attrdef>
+<attrdefs>Esri</attrdefs>
+<attrdomv>
+<udom>Positive real numbers that are automatically generated.</udom>
+</attrdomv>
+</attr>
+</detailed>
+</eainfo>
+<metainfo>
+<metd>20230717</metd>
+<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+<metstdv>FGDC-STD-001-1998</metstdv>
+<mettc>local time</mettc>
+</metainfo>
+</metadata>
