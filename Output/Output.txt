@@ -1,1 +1,0 @@
-"Output.gdb" should be created in ArcGIS Pro and placed here.
