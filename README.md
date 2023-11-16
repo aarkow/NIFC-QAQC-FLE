@@ -28,9 +28,9 @@ Users must ensure that the directory structure and file naming conventions are c
 A stable internet connection is required, especially for tools that download data from online sources or require data syncing. Interruptions in connectivity could lead to incomplete data processing or other errors.
 
 For more information regarding fireline effectiveness please refer to the following research articles:
-Evaluating fireline effectiveness across large wildfire events in north-central Washington State https://fireecology.springeropen.com/articles/10.1186/s42408-023-00167-6
-A Geospatial Framework to Assess Fireline Effectiveness for Large Wildfires in the Western USA https://www.mdpi.com/2571-6255/3/3/43
-Wildfire response performance measurement: Current and future directions https://www.fs.usda.gov/research/treesearch/56495
+[Wildfire response performance measurement: Current and future direction](https://www.fs.usda.gov/research/treesearch/56495 "Wildfire response performance measurement: Current and future direction")
+[Evaluating fireline effectiveness across large wildfire events in north-central Washington State](https://fireecology.springeropen.com/articles/10.1186/s42408-023-00167-6 "Evaluating fireline effectiveness across large wildfire events in north-central Washington State")
+[A Geospatial Framework to Assess Fireline Effectiveness for Large Wildfires in the Western USA](https://www.mdpi.com/2571-6255/3/3/43 "A Geospatial Framework to Assess Fireline Effectiveness for Large Wildfires in the Western USA")
 
 
 ### Contributions:
@@ -43,3 +43,7 @@ Email: aarkowitz@gmail.com, alexander.arkowitz@colostate.edu
 
 ### Acknowledgements:
 Special thanks to Matt Thompson, my supervisor, for conceiving this idea and helping develop this workflow.  Gratitude also extends to Brad Pietruszka for his extensive knowledge in wildfire incident operations and data structure, and to Ben Gannon for his expertise in data processing and wildfire data.
+
+![NIFC](https://en.wikipedia.org/wiki/National_Interagency_Fire_Center#/media/File:US-NationalInteragencyFireCenter-Logo.svg=100x20 "NIFC")
+![USFS](https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_the_United_States_Forest_Service.svg=100x20 "USFS")
+![CSU](https://brand.colostate.edu/wp-content/uploads/sites/47/2019/02/university-signature.jpeg=100x2 "CSU")
