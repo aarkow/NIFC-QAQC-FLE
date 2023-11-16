@@ -28,8 +28,11 @@ Users must ensure that the directory structure and file naming conventions are c
 A stable internet connection is required, especially for tools that download data from online sources or require data syncing. Interruptions in connectivity could lead to incomplete data processing or other errors.
 
 For more information regarding fireline effectiveness please refer to the following research articles:
+
 [Wildfire response performance measurement: Current and future direction](https://www.fs.usda.gov/research/treesearch/56495 "Wildfire response performance measurement: Current and future direction")
+
 [Evaluating fireline effectiveness across large wildfire events in north-central Washington State](https://fireecology.springeropen.com/articles/10.1186/s42408-023-00167-6 "Evaluating fireline effectiveness across large wildfire events in north-central Washington State")
+
 [A Geospatial Framework to Assess Fireline Effectiveness for Large Wildfires in the Western USA](https://www.mdpi.com/2571-6255/3/3/43 "A Geospatial Framework to Assess Fireline Effectiveness for Large Wildfires in the Western USA")
 
 
