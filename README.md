@@ -43,7 +43,3 @@ Email: aarkowitz@gmail.com, alexander.arkowitz@colostate.edu
 
 ### Acknowledgements:
 Special thanks to Matt Thompson, my supervisor, for conceiving this idea and helping develop this workflow.  Gratitude also extends to Brad Pietruszka for his extensive knowledge in wildfire incident operations and data structure, and to Ben Gannon for his expertise in data processing and wildfire data.
-
-![NIFC](https://en.wikipedia.org/wiki/National_Interagency_Fire_Center#/media/File:US-NationalInteragencyFireCenter-Logo.svg =100x20 "NIFC")
-![USFS](https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_the_United_States_Forest_Service.svg =100x20 "USFS")
-![CSU](https://brand.colostate.edu/wp-content/uploads/sites/47/2019/02/university-signature.jpeg =100x2 "CSU")
