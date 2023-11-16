@@ -30,6 +30,10 @@ File Directory Structure: Proper formatting and naming of the file directory are
 Users must ensure that the directory structure and file naming conventions are correctly set up as per the toolkit's requirements. This is essential for the smooth operation and integration of the different tools in the toolkit.
 Stable Internet Connection: A stable internet connection is required, especially for tools that download data from online sources or require data syncing. Interruptions in connectivity could lead to incomplete data processing or other errors.
 
+For more information regarding fireline effectiveness please refer to the following research articles:
+Evaluating fireline effectiveness across large wildfire events in north-central Washington State https://fireecology.springeropen.com/articles/10.1186/s42408-023-00167-6
+A Geospatial Framework to Assess Fireline Effectiveness for Large Wildfires in the Western USA https://www.mdpi.com/2571-6255/3/3/43
+
 
 Contributions:
 This toolkit represents an ongoing effort to enhance fire management strategies through data-driven analysis, and community contributions are vital for its continuous improvement. Please note that the creator of this toolkit is not a professional coder, and therefore, errors may present themselves in the code. Additionally, the toolkit might produce some unnecessary outputs during its operation. We actively encourage the community to contribute towards optimizing and improving the code. If you have suggestions for enhancements, identify bugs, or find ways to streamline the processes to reduce unnecessary outputs, your input is greatly appreciated. Your expertise and insights are invaluable in refining this toolkit to better serve the needs of the wildfire research and management community.
