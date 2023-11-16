@@ -12,6 +12,7 @@ The increasing availability of spatially explicit fireline records enables the e
 
 
 General Workflow:
+
 Data Preparation: Start by using Tool 1 to ensure the integrity and accuracy of fire perimeter data. Check the output attribution to ensure that your perimeter(s) of interest do not have duplicates with different IRWIN identification numbers or incident names. If so, use other data sources to verify the correct perimeter. Export your fire perimeter as a single feature class, and use as an input for the second tool.
 
 Fireline QAQC: Using a single NIFC wildfire perimeter as an input, select the relevant calendar year and run the tool. Once the tool has ran, conduct visual QAQC to remove wrongly attributed firelines or geometric anomalies (such as a straight fireline with no vertices that spans long distances).
