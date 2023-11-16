@@ -15,12 +15,14 @@ General Workflow:
 
 Data Preparation: Start by using Tool 1 to ensure the integrity and accuracy of fire perimeter data. Check the output attribution to ensure that your perimeter(s) of interest do not have duplicates with different IRWIN identification numbers or incident names. If so, use other data sources to verify the correct perimeter. Export your fire perimeter as a single feature class, and use as an input for the second tool.
 
-Fireline QAQC: Using a single NIFC wildfire perimeter as an input, select the relevant calendar year and run the tool. Once the tool has ran, conduct visual QAQC to remove wrongly attributed firelines or geometric anomalies (such as a straight fireline with no vertices that spans long distances).
-Simplification (Optional): If needed, apply Tool 2B for a simplified fireline dataset.
+Fireline QAQC: Using a single NIFC wildfire perimeter as an input, select the relevant calendar year and run the tool. Once the tool has ran, conduct visual QAQC to remove wrongly attributed firelines or geometric anomalies, such as a straight fireline with no vertices that span long distances.
+
+Simplification (Optional): If needed, apply Tool 2B for a simplified dissolved fireline dataset.
 
 Engagement Analysis: Utilize Tool 3 to attribute engagement statuses to QAQCed firelines. This will attribute “Held”, “Not Engaged”, and “Not Held” to firelines using a user provided buffer distance from the fire perimeter. A second output will be created that buffers the firelines so that they are suitable for overlay analysis. This step is optional as it is not necessary for FLE.
 
 Metric Calculation: Apply Tool 4 using the perimeter and QAQCed firelines from tool 1 and 2 to calculate and analyze FLE metrics. The outputs will be in feature class and excel xls formats. 
+
 For more information regarding the tools, please look at the tool descriptions or the description embedded in the python code itself.
 
 
