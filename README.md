@@ -35,6 +35,7 @@ Stable Internet Connection: A stable internet connection is required, especially
 For more information regarding fireline effectiveness please refer to the following research articles:
 Evaluating fireline effectiveness across large wildfire events in north-central Washington State https://fireecology.springeropen.com/articles/10.1186/s42408-023-00167-6
 A Geospatial Framework to Assess Fireline Effectiveness for Large Wildfires in the Western USA https://www.mdpi.com/2571-6255/3/3/43
+Wildfire response performance measurement: Current and future directions https://www.fs.usda.gov/research/treesearch/56495
 
 
 Contributions:
