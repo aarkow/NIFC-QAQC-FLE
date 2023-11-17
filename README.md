@@ -1,6 +1,6 @@
 # NIFC-QAQC-FLE
 ## Overview:
-#### This repository contains a suite of tools designed for wildfire data researchers and fire management professionals.  These tools facilitate the creation of fireline engagement metrics, aiding in the evaluation and improvement of wildfire management strategies. *These scripts and its accompanying directory should be downloaded onto a local drive. The user can then open an ArcGIS Pro 3.X project and direct the ArcCatalog to the files. The ArcToolbox that uses the scripts can be found in the Tool folder.*
+#### This repository contains a suite of tools designed for wildfire data researchers and fire management professionals.  These tools facilitate the creation of fireline engagement metrics, aiding in the evaluation and improvement of wildfire management strategies. **These scripts and its accompanying directory should be downloaded onto a local drive. The user can then open an ArcGIS Pro 3.X project and direct the ArcCatalog to the files. The ArcToolbox that uses the scripts can be found in the Tool folder.**
 
 
 ### Background:
