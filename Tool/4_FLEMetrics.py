@@ -466,14 +466,13 @@ try:
             arcpy.Delete_management(fc_path)
 
     #This section adds the name of the excel file as a column in the excel file iteself for better tracking when building the master FLE spreadsheet
-    excel_file_path = os.path.join(local_root_fld,"Output","Excel_FLE_Output","FLE_Metrics_"+IncidentName+"_"+datetime+".xls")
-    # Get the file name without the extension
-    file_name = os.path.splitext(os.path.basename(excel_file_path))[0]
-    # Read the Excel file into a DataFrame
+    excel_file_path = os.path.join(local_root_fld,"Output","Excel_FLE_Output","FLE_Metrics_"+IncidentName+"_"+datetime+".xlsx")
+
     df = pd.read_excel(excel_file_path)
-    # Add a new column "Name" with the file name
-    df['Name'] = file_name
-    # Save the modified DataFrame back to the Excel file
+    # Create the new column 'IncName' and populate it
+    df['IncName'] = IncidentName + "_" + datetime
+
+    # Save the updated dataframe back to the Excel file
     df.to_excel(excel_file_path, index=False)
 
 except:
@@ -500,28 +499,17 @@ except:
 
 #This section will append the new FLE metrics to a master FLE file for easier data analysis and tracking.
 try:
-    source_file = os.path.join(local_root_fld,"Output","Excel_FLE_Output","FLE_Metrics_"+IncidentName+"_"+datetime+".xls")
-    master_file = os.path.join(local_root_fld,"Output","Excel_FLE_Output","FLE_Master.xls")
-    # Load the source file into a DataFrame, skipping the first row (0-indexed)
-    source_df = pd.read_excel(source_file, header=None, skiprows=[0])
+    source_file = os.path.join(local_root_fld,"Output","Excel_FLE_Output","FLE_Metrics_"+IncidentName+"_"+datetime+".xlsx")
+    master_file = os.path.join(local_root_fld,"Output","Excel_FLE_Output","FLE_Master.xlsx")
+
+    # Load the source file into a DataFrame with the first row as the header
+    source_df = pd.read_excel(source_file)
 
     if not os.path.exists(master_file):
         source_df.to_excel(master_file, index=False)
-
     else:
         # Load the master file into a DataFrame
-        try:
-            master_df = pd.read_excel(master_file)
-        except FileNotFoundError:
-            # If the master file doesn't exist yet, create an empty DataFrame
-            master_df = pd.DataFrame()
-
-        # If the master DataFrame is empty, create columns based on the source DataFrame
-        if master_df.empty:
-            master_df.columns = [f"Column_{i+1}" for i in range(source_df.shape[1])]
-
-        # Ensure that the source DataFrame has the same column names as the master DataFrame
-        source_df.columns = master_df.columns
+        master_df = pd.read_excel(master_file)
 
         # Append the values from the source file to the master file
         master_df = pd.concat([master_df, source_df], ignore_index=True, axis=0)
@@ -529,11 +517,12 @@ try:
         # Save the updated master DataFrame back to the master file
         master_df.to_excel(master_file, index=False)
 
+
     arcpy.AddMessage("Appended new FLE XLS records to the FLE Master XLS.")
     print("Appended new FLE XLS records to the FLE Master XLS.")
     
 except:
-    arcpy.AddWarning("Error Appending new FLE XLS records to the FLE Master XLS. Make sure a master xls is available by copying a singular FLE output and name it 'FLE_Master.xls'")
+    arcpy.AddWarning("Error Appending new FLE XLS records to the FLE Master XLS. Make sure a master xls is available by copying a singular FLE output and name it 'FLE_Master.xlsx'")
     print("Error Appending new FLE XLS records to the FLE Master XLS.")
     report_error()
 
