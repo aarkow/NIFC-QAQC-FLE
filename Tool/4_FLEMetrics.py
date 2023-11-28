@@ -456,7 +456,7 @@ try:
     #Export a table of the metrics
     arcpy.conversion.ExportTable(OutputFLEMetricsName,"OutputFLEMetrics_ExportTable","HaPar IS NOT NULL",)
     arcpy.management.DeleteField("OutputFLEMetrics_ExportTable","Shape_Length;Shape_Area;Engagement","DELETE_FIELDS")
-    arcpy.conversion.TableToExcel("OutputFLEMetrics_ExportTable",(os.path.join(local_root_fld,"Output","Excel_FLE_Output","FLE_Metrics_"+IncidentName+"_"+datetime+".xls")),"NAME","CODE")
+    arcpy.conversion.TableToExcel("OutputFLEMetrics_ExportTable",(os.path.join(local_root_fld,"Output","Excel_FLE_Output","FLE_Metrics_"+IncidentName+"_"+datetime+".xlsx")),"NAME","CODE")
 
     #delete processing data
     fc_Delete = ["SortedExportFeature","OutputFLEMetrics_ExportTable"]
