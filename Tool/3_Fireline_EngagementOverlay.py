@@ -191,7 +191,7 @@ try:
     arcpy.management.CopyFeatures(QAQCed_Firelines,FLEngageOutput)
     #Dissolve FL to remove duplicates and only keep the highest ranking treatment for areas with duplicate lines and multiple treatments
     # Add a field to the fireline output to hold engagement status (Held, Not Held, Not Engaged).
-    arcpy.management.AddField(FLEngageOutput,"FirelineEgagement","TEXT",None,None,None,"","NULLABLE","NON_REQUIRED","")
+    arcpy.management.AddField(FLEngageOutput,"FirelineEngagement","TEXT",None,None,None,"","NULLABLE","NON_REQUIRED","")
     # Use the Multiple Ring Buffer tool to create two buffers: one inside (negative distance) and one outside (positive distance) the fire perimeter.
     # This will help identify areas that are held or not by the firelines.
     arcpy.analysis.MultipleRingBuffer("Perims","FirePerims_RingBuffer",FirelineEngagmentBuffList,"Meters","RingBuffDist","NONE","FULL","GEODESIC")
@@ -208,9 +208,9 @@ try:
     #Erase the original ops data with all the rings to only show "not engaged"
     arcpy.analysis.PairwiseErase(FLEngageOutput,"FirePerims_RingBuffer_100Layer","OpsData_NotEngaged")
     #Calculate field to attribute fireline engagement
-    arcpy.management.CalculateField("OpsData_NotHeldClip","FirelineEgagement",'"Not Held"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
-    arcpy.management.CalculateField("OpsData_HeldClip","FirelineEgagement",'"Held"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
-    arcpy.management.CalculateField("OpsData_NotEngaged","FirelineEgagement",'"Not Engaged"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
+    arcpy.management.CalculateField("OpsData_NotHeldClip","FirelineEngagement",'"Not Held"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
+    arcpy.management.CalculateField("OpsData_HeldClip","FirelineEngagement",'"Held"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
+    arcpy.management.CalculateField("OpsData_NotEngaged","FirelineEngagement",'"Not Engaged"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
     #Delete ops data so that name can be used for the merge output as well as other non-needed features.
     arcpy.Delete_management(FLEngageOutput)
     # Merge the clipped and erased features back into a single feature class with attributed engagement status.
@@ -230,7 +230,7 @@ except:
 
 try:
     # Dissolve the firelines based on the feature category to consolidate overlapping features.
-    arcpy.analysis.PairwiseDissolve(FLEngageOutput,"Firelines_Diss","FeatureCategory;FirelineEgagement",None,"MULTI_PART","")
+    arcpy.analysis.PairwiseDissolve(FLEngageOutput,"Firelines_Diss","FeatureCategory;FirelineEngagement",None,"MULTI_PART","")
     # Add a new short integer field to hold a numeric value for the type of fireline based on the feature category.
     arcpy.management.AddField("Firelines_Diss","LineTypeValue","SHORT",None,None,None,"","NULLABLE","NON_REQUIRED","")
     arcpy.management.AddField("Firelines_Diss","EngagementValue","SHORT",None,None,None,"","NULLABLE","NON_REQUIRED","")
@@ -266,16 +266,16 @@ try:
     arcpy.management.CalculateField(
         in_table="Firelines_Diss",
         field="EngagementValue",
-        expression="Reclass(!FirelineEgagement!)",
+        expression="Reclass(!FirelineEngagement!)",
         expression_type="PYTHON3",
-        code_block="""def Reclass(FirelineEgagement):
-        if FirelineEgagement =='Held':
+        code_block="""def Reclass(FirelineEngagement):
+        if FirelineEngagement =='Held':
             return 3
-        elif FirelineEgagement =='Not Engaged':
+        elif FirelineEngagement =='Not Engaged':
             return 2
-        elif FirelineEgagement =='Not Held':
+        elif FirelineEngagement =='Not Held':
             return 1
-        elif FirelineEgagement is None:
+        elif FirelineEngagement is None:
             return None
         else: 
             return 1000""",
@@ -287,13 +287,13 @@ try:
     arcpy.analysis.PairwiseIntersect("Firelines_DissBuff","Line_DissBuffInt","ALL",None,"INPUT")
     arcpy.management.RepairGeometry("Line_DissBuffInt","DELETE_NULL","ESRI")
     # Dissolve the intersected buffered firelines again, this time including the newly calculated LineTypeValue.
-    arcpy.analysis.PairwiseDissolve("Line_DissBuffInt","Line_DissBuffInt_diss","FeatureCategory;LineTypeValue;FirelineEgagement;EngagementValue",None,"MULTI_PART","")
+    arcpy.analysis.PairwiseDissolve("Line_DissBuffInt","Line_DissBuffInt_diss","FeatureCategory;LineTypeValue;FirelineEngagement;EngagementValue",None,"MULTI_PART","")
     # Perform a union to combine all pieces of the buffered firelines, including overlaps and gaps.
     arcpy.analysis.Union("Line_DissBuffInt_diss #","Line_DissBuffIntUnion","ALL",None,"GAPS")
     # Count the overlapping features to determine the complexity of fireline intersections.
     arcpy.analysis.CountOverlappingFeatures("Line_DissBuffIntUnion","Line_DissBuffIntUn_CntOvp",1,"Line_CntOvp_Tbl")
     # Join the count and statistics back to the original features to include the overlap counts and stats.
-    arcpy.management.JoinField("Line_CntOvp_Tbl","ORIG_OID","Line_DissBuffIntUnion","OBJECTID","LineTypeValue;FeatureCategory;FirelineEgagement;EngagementValue","NOT_USE_FM",None)
+    arcpy.management.JoinField("Line_CntOvp_Tbl","ORIG_OID","Line_DissBuffIntUnion","OBJECTID","LineTypeValue;FeatureCategory;FirelineEngagement;EngagementValue","NOT_USE_FM",None)
     arcpy.analysis.Statistics("Line_CntOvp_Tbl","Line_CntOvp_Stats_MxVlu","LineTypeValue MAX","OVERLAP_OID","")
     arcpy.analysis.Statistics("Line_CntOvp_Tbl","Line_CntOvp_Stats_Sum","LineTypeValue SUM","OVERLAP_OID","")
     arcpy.analysis.Statistics("Line_CntOvp_Tbl","Line_CntOvp_Stats_Concat","FeatureCategory CONCATENATE","OVERLAP_OID",", ")
