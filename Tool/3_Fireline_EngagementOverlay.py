@@ -152,8 +152,8 @@ try:
         arcpy.management.CalculateField("PerimsToDiss","Joinfield","1")
         arcpy.management.DeleteField("PerimsToDiss","attr_IrwinID;attr_IncidentName","DELETE_FIELDS")
         arcpy.management.JoinField("PerimsToDiss","Joinfield","Perimeters_LrgstPerim","Joinfield","attr_IncidentName;attr_IrwinID")
-        arcpy.analysis.PairwiseDissolve("PerimsToDiss",Perims,"attr_IncidentName;attr_IrwinID;attr_FireMgmtComplexity",None,"MULTI_PART")
-        arcpy.management.CalculateField(Perims,"attr_IncidentName",'!attr_IncidentName!+ " Complex"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
+        arcpy.analysis.PairwiseDissolve("PerimsToDiss","Perims","attr_IncidentName;attr_IrwinID;attr_FireMgmtComplexity",None,"MULTI_PART")
+        arcpy.management.CalculateField("Perims","attr_IncidentName",'!attr_IncidentName!+ " Complex"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
     # If only a single perimeter is provided, check for the 'attr_FireMgmtComplexity' field and act accordingly.
     elif count == 1:
         lstFields = arcpy.ListFields(Perimeters)
