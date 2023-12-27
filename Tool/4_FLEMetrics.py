@@ -376,7 +376,14 @@ try:
     arcpy.management.CalculateField(OutputFLEMetricsName,"FirePerimeterMtrs","!SUM_FirePerimeterMtrs!","PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
     arcpy.management.CalculateField(OutputFLEMetricsName,"HeldLine","!SUM_HeldLine!","PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
     arcpy.management.CalculateField(OutputFLEMetricsName,"IncGeodesAreaSqMt","!SUM_IncGeodesAreaSqMt!","PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
-    arcpy.management.DeleteField(OutputFLEMetricsName,"LinePerimeter;LineLength;BurnedOverPerimeterSqMt;BurnedOverLineLengthSqMt;NotEngagedPerimeterSqMt;NotEngagedLineLengthSqMt;SUM_IncGeodesAreaSqMt;SUM_NotEngagedLine;SUM_HeldLine;SUM_FirePerimeterMtrs;SUM_BurnedOverLine;LinkingField","DELETE_FIELDS")
+    #Bring in Inc name as FCName and IRWINID to FLE output
+    arcpy.management.AddField(OutputFLEMetricsName,"FCName","TEXT",None,None,None,"","NULLABLE","NON_REQUIRED","")
+    arcpy.management.AddField(OpsData_QAQC_Firelines,"LinkingField","SHORT",None,None,None,"","NULLABLE","NON_REQUIRED","")
+    arcpy.management.CalculateField(OpsData_QAQC_Firelines,"LinkingField","1","PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
+    arcpy.management.JoinField(OutputFLEMetricsName,"LinkingField",OpsData_QAQC_Firelines,"LinkingField","IncidentName;IRWINID")
+    arcpy.management.CalculateField(OutputFLEMetricsName,"FCName","!IncidentName!","PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
+    arcpy.management.DeleteField(OpsData_QAQC_Firelines,"LinkingField","DELETE_FIELDS")
+    arcpy.management.DeleteField(OutputFLEMetricsName,"IncidentName;LinePerimeter;LineLength;BurnedOverPerimeterSqMt;BurnedOverLineLengthSqMt;NotEngagedPerimeterSqMt;NotEngagedLineLengthSqMt;SUM_IncGeodesAreaSqMt;SUM_NotEngagedLine;SUM_HeldLine;SUM_FirePerimeterMtrs;SUM_BurnedOverLine;LinkingField","DELETE_FIELDS")
     
     #Add Fields and calculate metrics
     arcpy.management.AddField(OutputFLEMetricsName,"HTr","DOUBLE",None,None,None,"","NULLABLE","NON_REQUIRED","")
@@ -409,13 +416,12 @@ try:
 
     #delete processing data
     fc_Delete = ["HeldFirePerimBuffer","BurnedOverLine","OutputFLEMetrics_ExportTable","FLE_Output_Dateti_Statistics","FLE_Output_Sums","HeldLine","HeldLine_100mBuff","HeldLine_Clip_HeldBuff","Lines_Buff5","Lines_Buff25","NotEngaged","PerimMltRngBuff","FLE_Output_HeldOverwrite"]
-
     for fc in fc_Delete:
         fc_path = os.path.join(localoutputws, fc)
         if arcpy.Exists(fc_path):
             arcpy.Delete_management(fc_path)
     
-    #Add a flag field if metrics fall outside of possible bounds. A better way to code this exists and should be explored/written in.
+    #Add a flag field to ID if metrics fall outside of possible bounds. A better way to code this exists and should be explored/written in.
     arcpy.management.AddField(OutputFLEMetricsName,"FLE_Flag","TEXT")
     arcpy.management.CalculateField(OutputFLEMetricsName,"FLE_Flag",'"None"',"PYTHON3","","TEXT","NO_ENFORCE_DOMAINS")
 
@@ -449,9 +455,36 @@ try:
         arcpy.management.CalculateField(OutputFLEMetricsName,"FLE_Flag",'"Check data as TR value is in top 95 percentile."',"PYTHON3", "","TEXT","NO_ENFORCE_DOMAINS")
         arcpy.AddWarning("TR Value is considered extreme. Check data.")
 
-    #Export FC and overwrite old one to sort fields in an appealing way
-    arcpy.conversion.ExportFeatures(OutputFLEMetricsName,"SortedExportFeature","","NOT_USE_ALIAS",'Shape_Length "Shape_Length" false true true 8 Double 0 0,First,#,'+OutputFLEMetricsName+',Shape_Length,-1,-1;Shape_Area "Shape_Area" false true true 8 Double 0 0,First,#,'+OutputFLEMetricsName+',Shape_Area,-1,-1;Engagement "Engagement" true true false 255 Text 0 0,First,#,'+OutputFLEMetricsName+',Engagement,0,255;FirePerimeterMtrs "FirePerimeterMtrs" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',FirePerimeterMtrs,-1,-1;IncGeodesAreaSqMt "IncGeodesAreaSqMt" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',IncGeodesAreaSqMt,-1,-1;HeldLine "HeldLine" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',HeldLine,-1,-1;BurnedOverLine "BurnedOverLine" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',BurnedOverLine,-1,-1;NotEngagedLine "NotEngagedLine" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',NotEngagedLine,-1,-1;TotalLine "TotalLine" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',TotalLine,-1,-1;HaPar "HaPar" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',HaPar,-1,-1;HTr "HTr" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',HTr,-1,-1;TR "TR" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',TR,-1,-1;ER "ER" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',ER,-1,-1;HER "HER" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',HER,-1,-1;BTR "BTR" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',BTR,-1,-1;NETR "NETR" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',NETR,-1,-1;PrAr "PrAr" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',PrAr,-1,-1;attr_FireMgmtComplexity "attr_FireMgmtComplexity" true true false 255 Text 0 0,First,#,'+OutputFLEMetricsName+',attr_FireMgmtComplexity,0,255;FLE_Flag "FLE_Flag" true true false 255 Text 0 0,First,#,'+OutputFLEMetricsName+',FLE_Flag,0,255',None)
+    #Export FC and overwrite old one to sort fields in an appealing way")
+    arcpy.conversion.ExportFeatures(OutputFLEMetricsName,"SortedExportFeature","","NOT_USE_ALIAS",'FCName "FCName" true true false 255 Text 0 0,First,#,'+OutputFLEMetricsName+',FCName,0,254;IRWINID "IRWINID" true true false 50 Text 0 0,First,#,'+OutputFLEMetricsName+',IRWINID,0,49;Engagement "Engagement" true true false 255 Text 0 0,First,#,'+OutputFLEMetricsName+',Engagement,0,254;FirePerimeterMtrs "FirePerimeterMtrs" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',FirePerimeterMtrs,-1,-1;IncGeodesAreaSqMt "IncGeodesAreaSqMt" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',IncGeodesAreaSqMt,-1,-1;TotalLine "TotalLine" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',TotalLine,-1,-1;HeldLine "HeldLine" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',HeldLine,-1,-1;BurnedOverLine "BurnedOverLine" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',BurnedOverLine,-1,-1;NotEngagedLine "NotEngagedLine" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',NotEngagedLine,-1,-1;HTr "HTr" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',HTr,-1,-1;TR "TR" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',TR,-1,-1;ER "ER" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',ER,-1,-1;HER "HER" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',HER,-1,-1;BTR "BTR" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',BTR,-1,-1;NETR "NETR" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',NETR,-1,-1;HaPar "HaPar" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',HaPar,-1,-1;PrAr "PrAr" true true false 8 Double 0 0,First,#,'+OutputFLEMetricsName+',PrAr,-1,-1;attr_FireMgmtComplexity "attr_FireMgmtComplexity" true true false 25 Text 0 0,First,#,'+OutputFLEMetricsName+',attr_FireMgmtComplexity,0,24;FLE_Flag "FLE_Flag" true true false 255 Text 0 0,First,#,'+OutputFLEMetricsName+',FLE_Flag,0,254;Shape_Length "Shape_Length" false true true 8 Double 0 0,First,#,'+OutputFLEMetricsName+',Shape_Length,-1,-1;Shape_Area "Shape_Area" false true true 8 Double 0 0,First,#,'+OutputFLEMetricsName+',Shape_Area,-1,-1',None)
     arcpy.conversion.ExportFeatures("SortedExportFeature",OutputFLEMetricsName)
+
+    #Fill all atributes for FCName and IRWIN, not just the top one.
+    field_to_update = 'FCName'
+    # Find the first non-null value in the field
+    with arcpy.da.SearchCursor(OutputFLEMetricsName, [field_to_update]) as cursor:
+        for row in cursor:
+            if row[0] is not None:
+                first_non_null_value = row[0]
+                break
+    # Update nulls in the field with the first non-null value
+    with arcpy.da.UpdateCursor(OutputFLEMetricsName, [field_to_update]) as cursor:
+        for row in cursor:
+            if row[0] is None:
+                row[0] = first_non_null_value
+                cursor.updateRow(row)
+    field_to_update = 'IRWINID'     
+    with arcpy.da.SearchCursor(OutputFLEMetricsName, [field_to_update]) as cursor:
+        for row in cursor:
+            if row[0] is not None:
+                first_non_null_value = row[0]
+                break
+    # Update nulls in the field with the first non-null value
+    with arcpy.da.UpdateCursor(OutputFLEMetricsName, [field_to_update]) as cursor:
+        for row in cursor:
+            if row[0] is None:
+                row[0] = first_non_null_value
+                cursor.updateRow(row)
     
     #Export a table of the metrics
     arcpy.conversion.ExportTable(OutputFLEMetricsName,"OutputFLEMetrics_ExportTable","HaPar IS NOT NULL",)
